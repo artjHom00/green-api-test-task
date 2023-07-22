@@ -1,6 +1,12 @@
 
 const amqp = require('amqplib');
 const logger = require('./logger');
+require('dotenv').config();
+
+
+if(!process.env.RABBITMQ_CONNECTION_STRING) {
+  throw new Error('No RabbitMQ connection string provided in .env file')
+}
 
 async function processTask(data) {
     try {
@@ -21,7 +27,7 @@ async function processTask(data) {
 (async () => {
     try {
         
-        const connection = await amqp.connect('amqp://localhost');
+        const connection = await amqp.connect(process.env.RABBITMQ_CONNECTION_STRING);
         logger.info('[M2] Connected to RabbitMQ');
         
         channel = await connection.createChannel();

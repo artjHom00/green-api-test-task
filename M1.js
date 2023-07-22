@@ -2,13 +2,18 @@ const express = require('express');
 const app = express();
 const amqp = require('amqplib');
 const logger = require('./logger');
+require('dotenv').config();
+
+if(!process.env.RABBITMQ_CONNECTION_STRING) {
+  throw new Error('No RabbitMQ connection string provided in .env file')
+}
 
 let connection;
 // Объект для хранения результатов заданий
 let taskResults = {};
 
 
-amqp.connect('amqp://localhost').then(async (res) => {
+amqp.connect(process.env.RABBITMQ_CONNECTION_STRING).then(async (res) => {
   connection = res
   logger.info('[M1] RabbitMQ Connected')
   
@@ -80,10 +85,9 @@ app.get('/process', async (req, res) => {
 });
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
 
   logger.info(`[M1] Listening at http://localhost:${port}`);
-
 
 });
