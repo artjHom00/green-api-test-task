@@ -1,0 +1,19 @@
+{
+  "name": "green-api-test-task",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"nodemon M1.js\" \"nodemon M2.js\"",
+    "start": "concurrently \"node M1.js\" \"node M2.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.3",
+    "concurrently": "^8.2.0",
+    "express": "^4.18.2",
+    "winston": "^3.10.0"
+  }
+}
